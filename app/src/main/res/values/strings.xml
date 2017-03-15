@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Malabar Blood Circle</string>
     <string name="action_settings">Settings</string>
+
+
+    <string-array name="spinnerItemsDistrict">
+        <item>Select</item>
+        <item>Kasargod</item>
+        <item>Kannur</item>
+        <item>Wayanad</item>
+        <item>Kozhikod</item>
+        <item>Malappuram</item>
+    </string-array>
 </resources>
