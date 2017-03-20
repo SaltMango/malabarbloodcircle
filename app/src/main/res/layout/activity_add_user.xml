@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="circle.malabarblood.malabarbloodcircle.AddUserActivity">
+
+
+    <TextView
+        android:id="@+id/addDonnerText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".9"
+        android:background="@drawable/bghead"
+        android:gravity="center"
+        android:text="Add Donner"
+        android:textSize="36sp" />
+
+
+    <LinearLayout
+        android:background="@drawable/adddonnerbg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/searchGroupId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Blood Group"
+            android:textSize="26sp" />
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f8bbd0"
+                android:text="A+" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A-" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:background="#f8bbd0"
+                android:text="B+" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B-" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:background="#f8bbd0"
+                android:text="O+" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="O-" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:background="@drawable/adddonnerbg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Name:"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:textSize="26sp" />
+
+        <EditText
+            android:id="@+id/addUserNameid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/adddonnerbg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="Mobile:"
+            android:textSize="26sp" />
+
+        <EditText
+            android:id="@+id/addDonnerMobileid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:ems="10"
+            android:inputType="phone" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:background="@drawable/adddonnerbg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="District:"
+            android:textSize="26sp" />
+
+        <Spinner
+            android:entries="@array/spinnerItemsDistrict"
+            android:id="@+id/spinnerDistricId"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2">
+
+        </Spinner>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:background="@drawable/adddonnerbg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="Taluk:"
+            android:textSize="26sp" />
+
+        <Spinner
+            android:id="@+id/spinnerTalukId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2">
+
+        </Spinner>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:background="@drawable/adddonnerbg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Place:"
+            android:gravity="end"
+            android:textSize="26sp"
+            android:layout_gravity="center"
+            />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/addDonnerPlaceId"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        >
+
+    </LinearLayout>
+
+
+    <Button
+        android:background="@drawable/adddonnerbg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addDonnerSaveId"
+        android:text="Save"
+        android:layout_gravity="center"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        >
+
+    </LinearLayout>
+
+</LinearLayout>

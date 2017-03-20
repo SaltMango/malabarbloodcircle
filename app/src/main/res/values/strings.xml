@@ -11,4 +11,49 @@
         <item>Kozhikod</item>
         <item>Malappuram</item>
     </string-array>
+
+    <string-array name="spinnerKasargod">
+        <item>Select</item>
+        <item>Hosdurg</item>
+        <item>Vellarikundu</item>
+        <item>Kasaragod</item>
+        <item>Manjeshwar(Uppala)</item>
+    </string-array>
+
+    <string-array name="spinnerKannur">
+        <item> Select </item>
+        <item> Taliparamba </item>
+        <item> Kannur </item>
+        <item> Iritty </item>
+        <item> Thalassery </item>
+        <item> Payyanur </item>
+    </string-array>
+
+    <string-array name="spinnerWayanad">
+        <item>Select</item>
+        <item>Mananthavady</item>
+        <item>Sulthan Bathery</item>
+        <item>Vythiri</item>
+    </string-array>
+
+    <string-array name="spinnerKozhikkod">
+        <item>Select</item>
+        <item>	Kozhikode </item>
+        <item> Thamarassery </item>
+        <item> Koyilandy </item>
+        <item>	Vatakara </item>
+    </string-array>
+
+
+    <string-array name="spinnerMalappuram">
+        <item>Select</item>
+        <item>Thiroorangadi</item>
+        <item>Tirur</item>
+        <item>Ponnani</item>
+        <item>Kondotty</item>
+        <item>Eranad(Manjeri)</item>
+        <item>Nilambur</item>
+        <item>Perinthalmanna</item>
+    </string-array>
+
 </resources>
