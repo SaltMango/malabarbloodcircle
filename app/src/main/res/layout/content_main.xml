@@ -34,7 +34,7 @@
             android:layout_height="0dp"
             android:layout_weight="2"
             app:cardBackgroundColor="#e57373"
-            app:cardCornerRadius="5dp"
+            app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -46,57 +46,23 @@
                 <TextView
                     android:id="@+id/searchGroupId"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Group"
                     android:textSize="26sp" />
 
 
-                <RadioGroup
+                <com.whygraphics.multilineradiogroup.MultiLineRadioGroup
+                    xmlns:multi_line_radio_group="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
+                    android:id="@+id/main_activity_multi_line_radio_group"
                     android:layout_height="0dp"
                     android:layout_weight="2"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    multi_line_radio_group:radio_buttons="@array/radio_buttons"
+                    multi_line_radio_group:max_in_row="4"
+                    />
 
-                    <RadioButton
-                        android:id="@+id/radioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#ffffff"
-                        android:text="A+" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="A-" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:background="#ffffff"
-                        android:text="B+" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="B-" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:background="#ffffff"
-                        android:text="O+" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="O-" />
-
-                </RadioGroup>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
@@ -105,8 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#e8f5e9"
-            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#e57373"
+            app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -120,12 +86,13 @@
                     android:gravity="end"
                     android:layout_gravity="center"
                     android:text="District:"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:entries="@array/spinnerItemsDistrict"
                     android:id="@+id/spinnerDistricId"
                     android:layout_width="0dp"
+                    android:layout_marginTop="2dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2">
@@ -141,8 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#e8f5e9"
-            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="#e57373"
+            app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -157,13 +124,15 @@
                     android:gravity="end"
                     android:layout_gravity="center"
                     android:text="Taluk:"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/spinnerTalukId"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+
                     android:layout_weight="2">
 
                 </Spinner>
@@ -197,6 +166,10 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+
         </LinearLayout>
+
     </LinearLayout>
+
+
 </LinearLayout>

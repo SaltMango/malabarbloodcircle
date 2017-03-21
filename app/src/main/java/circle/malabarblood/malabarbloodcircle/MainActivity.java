@@ -9,9 +9,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.whygraphics.multilineradiogroup.MultiLineRadioGroup;
+
+import static android.R.attr.button;
+
 public class MainActivity extends AppCompatActivity {
+
+    public Button searchButton;
+    public Spinner districtSpinner, talukSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +31,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-
-
-
             @Override
             public void onClick(View view) {
+
+            }
+        });
+
+        searchButton = (Button)findViewById(R.id.searchButtonId);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -56,10 +70,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addDonnerTest(View view) {
 
-        Intent intent = new Intent(this,AddUserActivity.class);
-        startActivity(intent);
+public void radioBtn(){
 
-    }
+
+    MultiLineRadioGroup mMultiLineRadioGroup = (MultiLineRadioGroup) findViewById(R.id.main_activity_multi_line_radio_group);
+
+    mMultiLineRadioGroup.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(ViewGroup group, RadioButton button) {
+            Toast.makeText(MainActivity.this,
+                    button.getText() + " was clicked",
+                    Toast.LENGTH_SHORT).show();
+        }
+    });
+}
 }

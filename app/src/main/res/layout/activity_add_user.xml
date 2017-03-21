@@ -46,7 +46,6 @@
                 android:id="@+id/radioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#f8bbd0"
                 android:text="A+" />
 
             <RadioButton
@@ -58,7 +57,6 @@
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:background="#f8bbd0"
                 android:text="B+" />
 
             <RadioButton
@@ -70,7 +68,6 @@
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:background="#f8bbd0"
                 android:text="O+" />
 
             <RadioButton
