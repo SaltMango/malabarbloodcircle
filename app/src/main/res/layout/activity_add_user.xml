@@ -19,72 +19,55 @@
         android:textSize="36sp" />
 
 
-    <LinearLayout
-        android:background="@drawable/adddonnerbg"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="2.2"
+        app:cardBackgroundColor="#ff5454"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="9dp"
         android:orientation="vertical">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
         <TextView
             android:id="@+id/searchGroupId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Blood Group"
             android:textSize="26sp" />
 
 
-        <RadioGroup
+        <com.whygraphics.multilineradiogroup.MultiLineRadioGroup
+            xmlns:multi_line_radio_group="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:id="@+id/main_activity_multi_line_radio_group"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            multi_line_radio_group:radio_buttons="@array/radio_buttons"
+            multi_line_radio_group:max_in_row="4"
+            />
 
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A+" />
+        </LinearLayout>
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A-" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:text="B+" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="B-" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:text="O+" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="O-" />
-
-        </RadioGroup>
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
-    <LinearLayout
-        android:background="@drawable/adddonnerbg"
-        android:layout_width="match_parent"
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="#ff5454"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="9dp"        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView3"
@@ -103,15 +86,19 @@
             android:layout_weight="2"
             android:layout_gravity="center"
             />
+</LinearLayout>
+    </android.support.v7.widget.CardView>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:background="@drawable/adddonnerbg"
-        android:layout_width="match_parent"
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="#ff5454"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="9dp"        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <TextView
             android:layout_width="0dp"
@@ -131,15 +118,22 @@
             android:ems="10"
             android:inputType="phone" />
 
+</LinearLayout>
+    </android.support.v7.widget.CardView>
 
-    </LinearLayout>
 
-
-    <LinearLayout
-        android:background="@drawable/adddonnerbg"
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="#ff5454"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="9dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
         <TextView
             android:id="@+id/textView2"
@@ -156,21 +150,30 @@
             android:id="@+id/spinnerDistricId"
             android:layout_width="0dp"
             android:gravity="center"
+            android:layout_marginTop="2dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2">
 
         </Spinner>
 
+        </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
-    <LinearLayout
-        android:background="@drawable/adddonnerbg"
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="#ff5454"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="9dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
         <TextView
             android:id="@+id/textView4"
@@ -185,22 +188,31 @@
         <Spinner
             android:id="@+id/spinnerTalukId"
             android:layout_width="0dp"
+            android:layout_marginTop="2dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2">
 
         </Spinner>
 
+        </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
-    <LinearLayout
-        android:background="@drawable/adddonnerbg"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:cardCornerRadius="9dp"
+        app:cardBackgroundColor="#ff5454"
+        app:cardUseCompatPadding="true"
         android:layout_weight="1">
-        
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -218,7 +230,9 @@
             android:id="@+id/addDonnerPlaceId"
 
             />
-    </LinearLayout>
+</LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -228,16 +242,23 @@
 
     </LinearLayout>
 
-
+<android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="#fdd835"
+    android:layout_height="wrap_content">
     <Button
-        android:background="@drawable/adddonnerbg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#ef5350"
         android:id="@+id/addDonnerSaveId"
         android:text="Save"
-        android:layout_gravity="center"
 
         />
+</android.support.v7.widget.CardView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
