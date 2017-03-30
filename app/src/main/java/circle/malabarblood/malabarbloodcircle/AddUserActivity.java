@@ -26,8 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static circle.malabarblood.malabarbloodcircle.MainActivity.calledAlready;
-
 public class AddUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public Spinner spinnerDist, spinnerTaluk;
