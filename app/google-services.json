@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "6436578008",
+    "firebase_url": "https://malabarbloodcircle-e23b4.firebaseio.com",
+    "project_id": "malabarbloodcircle-e23b4",
+    "storage_bucket": "malabarbloodcircle-e23b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6436578008:android:6ee2628be3b7c9d7",
+        "android_client_info": {
+          "package_name": "circle.malabarblood.malabarbloodcircle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6436578008-9i7bpkthdrdv6qqd1i9n8ojd09777nma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "circle.malabarblood.malabarbloodcircle",
+            "certificate_hash": "3bd5528b98508b18f73a030082194620f2424db1"
+          }
+        },
+        {
+          "client_id": "6436578008-up8me3doc87f7lhm7ldf1b54dbqb6psg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR8z4z-gJd-ZznjdiUMYaohQB5iItP2Zc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6436578008-up8me3doc87f7lhm7ldf1b54dbqb6psg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

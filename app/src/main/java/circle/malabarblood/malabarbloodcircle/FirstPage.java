@@ -1,27 +1,19 @@
 package circle.malabarblood.malabarbloodcircle;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,71 +23,27 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.whygraphics.multilineradiogroup.MultiLineRadioGroup;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static android.R.attr.button;
-import static android.R.attr.name;
 
-
-public class MainActivity extends AppCompatActivity {
-
+/*public class FirstPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
-
-        if (isNetworkAvailable()){
-
-        }
-        else {
-            AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("No Internet Connection ").setTitle("Warning..");
-            builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-
-    public void AddUser(View view) {
-        final Intent intent = new Intent(this,AddUserActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void searchUsers(View view) {
-
-        Intent intent = new Intent(this,FirstPage.class);
-        startActivity(intent);
     }
 }
+*/
 
-
-
-/**
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public Button searchButton;
     public Spinner spinnerDist, spinnerTaluk;
 
 
-    public boolean calledAlready = false;
+
 
     String uGroup,uDistrict,uTaluk;
 
@@ -103,26 +51,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     FirebaseDatabase mFirebaseDatabase;
 
     GenericTypeIndicator<ArrayList<User>> quesListGenericTypeIndicator;
-   public static ArrayList<User> downloaadusers;
+    public static ArrayList<User> downloaadusers;
     int totalUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        final Intent intent = new Intent(this,AddUserActivity.class);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       // final Intent intent = new Intent(this,AddUserActivity.class);
+
+     /**   FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(intent);
             }
-        });
+        });**/
 
         radioBtn();
 
@@ -132,21 +80,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(View v) {
 
                 if (uGroup == null ){
-                    AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
                     builder.setMessage("Select Blood Group!").setTitle("Warning..");
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
                 else if (Objects.equals(uDistrict, "Select")){
-                    AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
                     builder.setMessage("Select District!").setTitle("Warning..");
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
                 else if (Objects.equals(uTaluk, "Select")){
-                    AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
                     builder.setMessage("Select Taluk!").setTitle("Warning..");
 
                     AlertDialog dialog = builder.create();
@@ -156,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
                     if (totalUsers==0){
-                        AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
+                        AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
                         builder.setMessage("No User Available!").setTitle("Search Result");
 
                         AlertDialog dialog = builder.create();
@@ -164,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                     else {
 
-                        Intent intent = new Intent(MainActivity.this,SearchResult.class);
+                        Intent intent = new Intent(FirstPage.this,SearchResult.class);
 
 
                         //intent.putExtra("downloadUsers",downloaadusers);
@@ -180,30 +128,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-         spinnerDist = (Spinner) findViewById(R.id.spinnerDistricId);
+        spinnerDist = (Spinner) findViewById(R.id.spinnerDistricId);
         spinnerDist.setOnItemSelectedListener(this);
 
-         spinnerTaluk = (Spinner) findViewById(R.id.spinnerTalukId);
+        spinnerTaluk = (Spinner) findViewById(R.id.spinnerTalukId);
         spinnerTaluk.setOnItemSelectedListener(this);
     }
 
 
 
 
-public void radioBtn(){
+    public void radioBtn(){
 
 
-    MultiLineRadioGroup mMultiLineRadioGroup = (MultiLineRadioGroup) findViewById(R.id.main_activity_multi_line_radio_group);
+        MultiLineRadioGroup mMultiLineRadioGroup = (MultiLineRadioGroup) findViewById(R.id.main_activity_multi_line_radio_group);
 
-    mMultiLineRadioGroup.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(ViewGroup group, RadioButton button) {
+        mMultiLineRadioGroup.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ViewGroup group, RadioButton button) {
 
-                  uGroup = (String) button.getText();
+                uGroup = (String) button.getText();
 
-        }
-    });
-}
+            }
+        });
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -306,36 +254,35 @@ public void radioBtn(){
         DatabaseReference mQuestionReference = mDatabaseReference.child(uDistrict+"/"+uTaluk+"/"+uGroup);
 
 
-mQuestionReference.addValueEventListener(new ValueEventListener() {
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
+        mQuestionReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        downloaadusers = dataSnapshot.getValue(quesListGenericTypeIndicator);
+                downloaadusers = dataSnapshot.getValue(quesListGenericTypeIndicator);
 
-        Toast.makeText(MainActivity.this, "down", Toast.LENGTH_SHORT).show();
 
-        try {
-            totalUsers = downloaadusers.size();
+                try {
+                    delay();
+                    totalUsers = downloaadusers.size();
 
-            Log.d("loog", String.valueOf(totalUsers));
-        } catch (NullPointerException e) {
-            delay();
-            totalUsers =0;
-        }
+                } catch (NullPointerException e) {
 
-    }
+                    totalUsers =0;
+                }
 
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
+            }
 
-    }
-});
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
     void delay() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-}**/
+}

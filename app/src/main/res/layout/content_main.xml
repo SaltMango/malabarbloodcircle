@@ -149,15 +149,15 @@
         </LinearLayout>
 
         <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/searchButtonId"
-    android:layout_gravity="center"
-    android:text="SEARCH"
-    android:layout_marginBottom="30dp"
-    android:clickable="true"
-    android:onClick="addDonnerTest"
-    />
+            android:id="@+id/searchButtonId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:text="SEARCH"
+            android:onClick="searchDonor"
+            android:clickable="true"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
