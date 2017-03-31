@@ -6,48 +6,84 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
-import com.whygraphics.multilineradiogroup.MultiLineRadioGroup;
 
-import java.security.acl.Group;
-import java.util.ArrayList;
-import java.util.Objects;
-
-import static android.R.attr.button;
-import static android.R.attr.name;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static boolean calledAlready = false;
 
+    public FirebaseAnalytics mFirebaseAnalytics;
+
+    public FirebaseAuth mFirebaseAuth;
+    public FirebaseUser mFirebaseUser;
+    public String mUsername ;
+
+    public SignInButton signInButton;
+
+
+
+    private GoogleApiClient mGoogleApiClient;
+    private static final int RC_SIGN_IN = 9001;
+    private TextView mStatusTextView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
+
+        findViewById(R.id.firstpageAddId).setVisibility(View.GONE);
+
+        signInButton = (SignInButton)findViewById(R.id.sign_in_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        mStatusTextView = (TextView) findViewById(R.id.status);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Toast.makeText(MainActivity.this, "Try Again Later", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarId);
         setSupportActionBar(toolbar);
@@ -57,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("App Developed By SM").setTitle("About");
+                builder.setMessage("--MBC - A Youth Initiative For Transforming the Purpose  Of Blood Donation.--\n\n"+"Contact:\n\n" +"Kozhikode:\n9037811407, 8113080704.\n\n"+
+                        "Kannur:\n8907226896, 9037811407.\n\n"+
+                        "Malappuram:\n9633573285, 8089185739.").setTitle(" MALABAR BLOOD CIRCLE ");
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
@@ -88,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -113,258 +153,59 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,FirstPage.class);
         startActivity(intent);
     }
-}
 
-
-
-/**
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    public Button searchButton;
-    public Spinner spinnerDist, spinnerTaluk;
-
-
-    public boolean calledAlready = false;
-
-    String uGroup,uDistrict,uTaluk;
-
-
-    FirebaseDatabase mFirebaseDatabase;
-
-    GenericTypeIndicator<ArrayList<User>> quesListGenericTypeIndicator;
-   public static ArrayList<User> downloaadusers;
-    int totalUsers;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        final Intent intent = new Intent(this,AddUserActivity.class);
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            String email = acct.getEmail();
+            mStatusTextView.setText(acct.getDisplayName());
+
+            if (email.equals("yaseenkarumara@gmail.com") ||
+                    email.equals("brijinrajpgj@gmail.com") ||
+                    email.equals("basimnana@gmail.com")||
+                    email.equals("suparna0489@gmail.com")||
+                    email.equals("meetpranavts@gmail.com")||
+                    email.equals("mkmbwawa313@gmail.com")||
+                    email.equals("midhunchakravarty@gmail.com")||
+                    email.equals("jithu.nitc@gmail.com")||
+                    email.equals("mvsreenath@gmail.com") ){
+                updateUI(true);
             }
-        });
-
-        radioBtn();
-
-        searchButton = (Button)findViewById(R.id.searchButtonId);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (uGroup == null ){
-                    AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Select Blood Group!").setTitle("Warning..");
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-                else if (Objects.equals(uDistrict, "Select")){
-                    AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Select District!").setTitle("Warning..");
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-                else if (Objects.equals(uTaluk, "Select")){
-                    AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Select Taluk!").setTitle("Warning..");
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-                else {
-
-
-                    if (totalUsers==0){
-                        AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("No User Available!").setTitle("Search Result");
-
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                    else {
-
-                        Intent intent = new Intent(MainActivity.this,SearchResult.class);
-
-
-                        //intent.putExtra("downloadUsers",downloaadusers);
-
-
-                        startActivity(intent);
-                    }
-
-
-                }
-
+            else {
+                findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 
             }
-        });
 
-         spinnerDist = (Spinner) findViewById(R.id.spinnerDistricId);
-        spinnerDist.setOnItemSelectedListener(this);
+        } else {
+            // Signed out, show unauthenticated UI.
+            updateUI(false);
+        }
+    }
 
-         spinnerTaluk = (Spinner) findViewById(R.id.spinnerTalukId);
-        spinnerTaluk.setOnItemSelectedListener(this);
+    private void updateUI(boolean signedIn) {
+        if (signedIn) {
+            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+            findViewById(R.id.firstpageAddId).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.firstpageAddId).setVisibility(View.GONE);
+
+            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+        }
     }
 
 
-
-
-public void radioBtn(){
-
-
-    MultiLineRadioGroup mMultiLineRadioGroup = (MultiLineRadioGroup) findViewById(R.id.main_activity_multi_line_radio_group);
-
-    mMultiLineRadioGroup.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(ViewGroup group, RadioButton button) {
-
-                  uGroup = (String) button.getText();
-
-        }
-    });
 }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-        switch (parent.getId())
-        {
-            case R.id.spinnerDistricId:
-
-                uDistrict = (String) parent.getItemAtPosition(position);
-
-                if (uDistrict.equals("Select")){
-
-                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                            R.array.spinnerSelect, android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    spinnerTaluk.setAdapter(adapter);
-                }
-
-                else if (uDistrict.equals("Kannur")){
-
-                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                            R.array.spinnerKannur, android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    spinnerTaluk.setAdapter(adapter);
-                }
-
-                else if (uDistrict.equals("Kasargod")){
-
-                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                            R.array.spinnerKasargod, android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    spinnerTaluk.setAdapter(adapter);
-                }
-
-                else if (uDistrict.equals("Wayanad")){
-
-                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                            R.array.spinnerWayanad, android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    spinnerTaluk.setAdapter(adapter);
-                }
-
-                else if (uDistrict.equals("kozhikode")){
-
-                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                            R.array.spinnerKozhikode, android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    spinnerTaluk.setAdapter(adapter);
-                }
-
-                else if (uDistrict.equals("Malappuram")){
-
-                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                            R.array.spinnerMalappuram, android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    spinnerTaluk.setAdapter(adapter);
-                }
-
-
-                break;
-
-            case R.id.spinnerTalukId:
-                uTaluk = (String) parent.getItemAtPosition(position);
-
-                if (uTaluk.equals("Select") || uTaluk.equals("Select District") ){
-
-                }
-                else {
-                    firebaseDownload();
-
-                }
-
-                break;
-        }
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public void firebaseDownload() {
-
-        quesListGenericTypeIndicator = new GenericTypeIndicator<ArrayList<User>>() {
-        };
-
-
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-
-        DatabaseReference mDatabaseReference = mFirebaseDatabase.getReference();
-        DatabaseReference mQuestionReference = mDatabaseReference.child(uDistrict+"/"+uTaluk+"/"+uGroup);
-
-
-mQuestionReference.addValueEventListener(new ValueEventListener() {
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-
-        downloaadusers = dataSnapshot.getValue(quesListGenericTypeIndicator);
-
-        Toast.makeText(MainActivity.this, "down", Toast.LENGTH_SHORT).show();
-
-        try {
-            totalUsers = downloaadusers.size();
-
-            Log.d("loog", String.valueOf(totalUsers));
-        } catch (NullPointerException e) {
-            delay();
-            totalUsers =0;
-        }
-
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-
-    }
-});
-    }
-    void delay() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}**/
