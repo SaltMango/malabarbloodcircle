@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import static circle.malabarblood.malabarbloodcircle.FirstPage.downloaadusers;
 
@@ -77,5 +78,12 @@ public class SearchResult extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SearchResult.this,FirstPage.class);
+        startActivity(intent);
     }
 }

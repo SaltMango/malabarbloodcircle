@@ -43,9 +43,9 @@ public class AddUserActivity extends AppCompatActivity implements AdapterView.On
 
 
 
-    FirebaseDatabase mFirebaseDatabase;
-    GenericTypeIndicator<ArrayList<User>> quesListGenericTypeIndicator;
-    ArrayList<User> userArrayList;
+   public FirebaseDatabase mFirebaseDatabase;
+   public GenericTypeIndicator<ArrayList<User>> quesListGenericTypeIndicator;
+   public ArrayList<User> userArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,8 @@ public class AddUserActivity extends AppCompatActivity implements AdapterView.On
     public void findUsersNumber() {
 
 
+
+
         quesListGenericTypeIndicator = new GenericTypeIndicator<ArrayList<User>>() {};
 
 
@@ -104,9 +106,6 @@ public class AddUserActivity extends AppCompatActivity implements AdapterView.On
                     usersNo =0;
                 }
 
-
-
-                Log.d("looog", String.valueOf(usersNo));
             }
 
             @Override
@@ -279,5 +278,15 @@ public class AddUserActivity extends AppCompatActivity implements AdapterView.On
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        Intent intent = new Intent(AddUserActivity.this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 }

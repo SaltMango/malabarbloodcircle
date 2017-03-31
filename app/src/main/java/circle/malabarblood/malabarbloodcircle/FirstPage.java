@@ -1,6 +1,9 @@
 package circle.malabarblood.malabarbloodcircle;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -26,23 +30,14 @@ import com.whygraphics.multilineradiogroup.MultiLineRadioGroup;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
-/*public class FirstPage extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_page);
-    }
-}
-*/
 
 public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public Button searchButton;
     public Spinner spinnerDist, spinnerTaluk;
-
-
+    public boolean calledAlready =false;
 
 
     String uGroup,uDistrict,uTaluk;
@@ -54,15 +49,15 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
     public static ArrayList<User> downloaadusers;
     int totalUsers;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
 
        // final Intent intent = new Intent(this,AddUserActivity.class);
+
 
      /**   FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +67,9 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });**/
 
+
+
+
         radioBtn();
 
         searchButton = (Button)findViewById(R.id.searchButtonId);
@@ -79,23 +77,24 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
             @Override
             public void onClick(View v) {
 
+
                 if (uGroup == null ){
                     AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
-                    builder.setMessage("Select Blood Group!").setTitle("Warning..");
+                    builder.setMessage("Select Blood Group").setTitle("Warning");
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
                 else if (Objects.equals(uDistrict, "Select")){
                     AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
-                    builder.setMessage("Select District!").setTitle("Warning..");
+                    builder.setMessage("Select District").setTitle("Warning");
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
                 else if (Objects.equals(uTaluk, "Select")){
                     AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
-                    builder.setMessage("Select Taluk!").setTitle("Warning..");
+                    builder.setMessage("Select Taluk").setTitle("Warning");
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -103,23 +102,40 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
                 else {
 
 
-                    if (totalUsers==0){
-                        AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
-                        builder.setMessage("No User Available!").setTitle("Search Result");
+                    progressbar();
+                    Runnable progressRunnable = new Runnable() {
 
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                    else {
+                        @Override
+                        public void run() {
+                            if (totalUsers==0){
+                                AlertDialog.Builder  builder = new AlertDialog.Builder(FirstPage.this);
+                                builder.setMessage("No Donor Available Now !").setTitle("Search Result");
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                        Intent intent = new Intent(FirstPage.this,SearchResult.class);
+                                        finish();
+                                        Intent intent = getIntent();
+                                        startActivity(intent);
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                            else {
+
+                                finish();
+                                Intent intent = new Intent(FirstPage.this,SearchResult.class);
+                                startActivity(intent);
+                            }
+                        }
+                    };
+
+                    Handler pdCanceller = new Handler();
+                    pdCanceller.postDelayed(progressRunnable, 10000);
 
 
-                        //intent.putExtra("downloadUsers",downloaadusers);
 
-
-                        startActivity(intent);
-                    }
 
 
                 }
@@ -230,7 +246,6 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
                     firebaseDownload();
 
                 }
-
                 break;
         }
 
@@ -243,10 +258,10 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
 
     public void firebaseDownload() {
 
+
+
         quesListGenericTypeIndicator = new GenericTypeIndicator<ArrayList<User>>() {
         };
-
-
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -254,21 +269,34 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
         DatabaseReference mQuestionReference = mDatabaseReference.child(uDistrict+"/"+uTaluk+"/"+uGroup);
 
 
+
         mQuestionReference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 downloaadusers = dataSnapshot.getValue(quesListGenericTypeIndicator);
 
 
-                try {
-                    delay();
-                    totalUsers = downloaadusers.size();
 
-                } catch (NullPointerException e) {
+                Runnable progressRunnable = new Runnable() {
 
-                    totalUsers =0;
-                }
+                    @Override
+                    public void run() {
+                        try {
+                            totalUsers = downloaadusers.size();
+
+                        } catch (NullPointerException e) {
+
+                            totalUsers =0;
+                        }
+                    }
+                };
+
+                Handler pdCanceller = new Handler();
+                pdCanceller.postDelayed(progressRunnable, 10000);
+
+
 
             }
 
@@ -278,11 +306,36 @@ public class FirstPage extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
     }
-    void delay() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+
+
+        Intent intent = new Intent(FirstPage.this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+    }
+
+    public void progressbar(){
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle("Searching...");
+        progress.setMessage("Please wait...");
+        progress.setCancelable(false);
+        progress.show();
+
+        Runnable progressRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                progress.cancel();
+            }
+        };
+
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 10000);
     }
 }

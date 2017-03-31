@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -41,11 +42,27 @@ import static android.R.attr.name;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static boolean calledAlready = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarId);
+        setSupportActionBar(toolbar);
+
+        TextView about = (TextView)findViewById(R.id.aboutUs);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder  builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("App Developed By SM").setTitle("About");
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
         if (isNetworkAvailable()){
 
@@ -63,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
 
+        if (!calledAlready)
+        {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
+
     }
 
     private boolean isNetworkAvailable() {
@@ -74,12 +97,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void AddUser(View view) {
+
+
+        finish();
+
         final Intent intent = new Intent(this,AddUserActivity.class);
         startActivity(intent);
 
     }
 
     public void searchUsers(View view) {
+
+        finish();
 
         Intent intent = new Intent(this,FirstPage.class);
         startActivity(intent);
